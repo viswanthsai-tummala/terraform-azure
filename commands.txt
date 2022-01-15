@@ -1,0 +1,139 @@
+Commands:
+az login
+terraform init
+terraform plan
+terrafrom apply
+
+terraform destroy -target <resource.username>
+
+Terraform refresh (Usually fetches the current state and stores in the tfstate file)
+
+terraform show (displays content of state file)
+
+terraform plan -var="<variable_name>=specific value"
+
+teraform console (To test the inbuilt functions)
+teraform fmt (indents all .tf files for readability)
+terraform validate (teraform plan does validation implicitly)
+
+terraform taint <resourcetype>.<resourcename>
+
+terraform graph (dependancy graph. Use tools like graph viz etc  :: cat graph.dot | dot -Tsvg > graph.svg)
+
+terraform plan -out=<path>
+terraform apply <path>
+
+terraform output <name> (extract value of specific output from the state file)
+
+-referesh=false
+terraform plan -target=<>.<> (To minimise the API call in case of large infra)
+
+
+terraform apply -auto-approve (No prompt for "yes" etc)
+
+terraform workspace list
+terraform workspace show
+terraform workspace select <>
+
+NOTES:
+> Understanding providers and resources
+> Identifying specific resource block in terraform <resource-type>.<name>
+> Multiple ways to destroy resources in terraform.
+> Commenting out the terraform block /* */ and teraform understands that it is no longer needed
+
+> Terraform state file
+
+> tfstate file --> Current state .tf file --> Desired state
+> Note: Desired state what is explicitly defined in the resource block
+Say, u have not mentioned about security group and it has taken "default" security group. Even if u change to a custom security group
+in relation to terraform it will not have any impact on the desired state as it was not explicit (or implicitly mentioned.)
+
+> Provider versioning (Provider plugin version, is different from version of terraform itself.)
+Terraform Providers (Hashicorp distributed and 3rd Party). 3rd Party ==> Cannot be downloaded automatically upon running "terraform init" command. 
+Sometimes 3rd Party providers are also know as community providers. 
+Place plugin executable in Plugin directory. (terraform.d\plugins) This folder is different from Hashicorp distributed plugins.
+
+Attributes and understanding its importance
+Note: Attribute of a resource block can be fed as Argument to the next resource block.
+Ex: nw creation and then feeding as argument to the compute instance.
+
+Variable and different ways to assign them
+ - Variable defaults
+ - Variable specific values at time of terraform execution (Command line flags)
+ - File (terraform.tfvars) {By default this file name is expected by teraform. ELse u have supply file name at command line -var-file=""}
+ - Environment variables
+    - Windows: setx TF_VAR_<name of the variable> <value>
+    - Linux: export TF_VAR_<name of the variable>="<value>"
+
+Variable data types (number,string, list, map)
+
+Count (will reflect in the logical resource name) :: Like for loop
+Count.index
+
+Conditional statement: condition ? true_val : false:val   :: Like if statement (Terinary statement)
+
+Repetetive expression (like conditional etc) can be defined in "locals" 
+
+Functions (Only build-in. No user defined functions)
+
+Concept of data source
+
+TF_LOG environment variable (TRACE, DEBUG, INFO, WARN, ERROR)
+TF_LOG_PATH environment variable to set the location of tracefile instead of dumping logs to the stdout
+
+Terraform loads the .tf configuration files in the alphabetical order. Instead of writing all configuration in one file. Maintain different .tf configuration files
+like .tf for variables, .tf for compute resources, .tf for storage resources ... etc.
+
+Dynamic blocks (say multiple ingress rules for different ports. Config will be same but ports will be different)
+
+Terraform taint
+
+Splat expression
+
+Terraform settings (Special terraform block, to configure behavior of terraform itself)
+
+Challenges for Larger Infra (API limits)
+NOte: Any time u run the terraform plan, it will refresh all components in the .tf file. say there is only specific change and u dont need to refresh all
+and optimize the API calls.
+
+Terraform plan -target
+or refresh=false
+
+Terraform provisioners:
+Say instance is created and you also want to configure web server.
+file, remote-exec, local-exec
+Creation time provisioners and destroy time provisioners 
+on_failure = continue (even if proviosners fails, terraform continues with rest of the deployment.)
+
+modeules and concept of inheritance
+Note what is hardcoded in module.. cannot be changed after inheritance
+Instead make use of variable . Define a variable in resource block. Give a default variable. 
+And where u import the module assign a desired value to the variable and therby changing the 
+
+Terraform registry
+to search for modules if already written by someone
+
+Terraform workspace:
+Different workspaces have different values for environment variables
+terraform.tfstate.d ==> Note: In terraform state variables are mainted in separate folder for  each environment
+
+
+
+===
+Different Blocks:
+
+terraform
+resource
+data
+output
+Dynamic
+variables
+locals
+provisioners
+module
+
+===
+
+GIT BASH
+go to the .ssh folder and executed following
+ssh-keygen.exe
