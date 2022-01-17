@@ -35,6 +35,13 @@ terraform workspace list
 terraform workspace show
 terraform workspace select <>
 
+
+Terraform state show
+terraform state list
+
+terraform import <resource-type>.<resource-name> <id>
+
+
 NOTES:
 > Understanding providers and resources
 > Identifying specific resource block in terraform <resource-type>.<name>
@@ -117,6 +124,38 @@ Terraform workspace:
 Different workspaces have different values for environment variables
 terraform.tfstate.d ==> Note: In terraform state variables are mainted in separate folder for  each environment
 
+Commiting terraform configuration to GIT. But challenge is that tfstate file will have passwords so it is not committed to GIT. 
+However u want to enable the team collaboration and would like share the tfstate etc? How would you do it?
+
+Remote Backend:
+Allows you to store terraform state file in central repository. Since it has sensitive info, it cannot be stored in the Public GIT
+
+State file locking
+Note: All remote backends might not support state locking
+
+Terraform state modification:
+
+
+Need for terraform import
+For old terraform version we have to write the .tf configuration file before importing. 
+For upcoming version, both .tfstate and .tf configuration files be imported 
+
+
+Important notes on security:::::::******
+For AWS/Azure. Make use of CLI, in this way u need not mention credentials in the providers.tf configuration file
+
+Q)Say deployments across multiple regions etc.
+A) Make use of alias variable in provider block and reference it in the resource block
+
+Q)Say deployments across different accounts. (Different accounts have different access keys)
+A) in addition to the alias, make use of "profile" in the provider block
+and have the keys in yaml format in "credentials" file under ".aws" folder 
+
+Assume role in AWS
+use assume_role
+u will be granted with temporary credentials
+
+using "sensitive = true" . Note only prevents clear text display from the terminal. But it will be unencrypted in state file
 
 
 ===
