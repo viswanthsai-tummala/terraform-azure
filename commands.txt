@@ -81,7 +81,7 @@ Conditional statement: condition ? true_val : false:val   :: Like if statement (
 
 Repetetive expression (like conditional etc) can be defined in "locals" 
 
-Functions (Only build-in. No user defined functions)
+Functions (Only built-in. No user defined functions)
 
 Concept of data source
 
@@ -157,6 +157,17 @@ u will be granted with temporary credentials
 
 using "sensitive = true" . Note only prevents clear text display from the terminal. But it will be unencrypted in state file
 
+
+terraform cloud
+
+local commands but state file and execution on terraform cloud (remote)  === REMOTE OPERATIONS
+Need backend.hcl file with workspace, organization and hostname info
+
+Note: A workspace in terraform cloud cannot be associated with multiple sources (VCS, remote operations etc)
+For rempte operations:
+terraform login
+terraform init -file=backend.hcl (Refer to the documentation)
+Azure login credentials will be present as a vaiable in the workspace.
 
 ===
 Different Blocks:
